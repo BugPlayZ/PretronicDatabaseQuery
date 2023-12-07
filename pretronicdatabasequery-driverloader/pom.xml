@@ -36,7 +36,7 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>net.pretronic.libraries</groupId>
+            <groupId>com.github.BugPlayZ.PretronicLibraries</groupId>
             <artifactId>pretroniclibraries-dependency</artifactId>
             <version>${dependency.pretronic.libraries.version}</version>
             <scope>compile</scope>

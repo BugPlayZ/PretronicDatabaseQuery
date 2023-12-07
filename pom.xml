@@ -25,7 +25,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- Dependency version -->
-        <dependency.pretronic.libraries.version>1.0.100.73-SNAPSHOT</dependency.pretronic.libraries.version>
+        <dependency.pretronic.libraries.version>69135f099c</dependency.pretronic.libraries.version>
         <dependency.pretronic.connectionpool.version>1.0.1-SNAPSHOT</dependency.pretronic.connectionpool.version>
 
         <dependency.hikaricp.version>3.4.1</dependency.hikaricp.version>
@@ -45,15 +45,15 @@
 
     <repositories>
         <repository>
-            <id>pretronic</id>
-            <url>https://repository.pretronic.net/repository/pretronic/</url>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </repositories>
 
     <distributionManagement>
         <repository>
-            <id>pretronic</id>
-            <url>https://repository.pretronic.net/repository/pretronic/</url>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
         </repository>
     </distributionManagement>
 

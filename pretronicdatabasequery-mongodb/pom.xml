@@ -59,7 +59,7 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>net.pretronic.libraries</groupId>
+            <groupId>com.github.BugPlayZ.PretronicLibraries</groupId>
             <artifactId>pretroniclibraries-document</artifactId>
             <version>${dependency.pretronic.libraries.version}</version>
             <scope>compile</scope>
