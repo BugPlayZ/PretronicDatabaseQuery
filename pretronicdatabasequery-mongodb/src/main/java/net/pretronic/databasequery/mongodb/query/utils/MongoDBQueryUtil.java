@@ -178,11 +178,4 @@ public final class MongoDBQueryUtil {
     public static void buildGroupByEntry(BuildContext context, AbstractSearchQuery.GroupByEntry entry) {
 
     }
-
-
-    public static void printQuery(BuildContext context) {
-        for (Bson bson : context.getFindQuery()) {
-            System.out.println(bson.toBsonDocument(BsonDocument.class, MongoClient.getDefaultCodecRegistry()));
-        }
-    }
 }

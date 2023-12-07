@@ -45,8 +45,6 @@ public class MongoDBDeleteQuery extends AbstractDeleteQuery<MongoDBDatabaseColle
         BuildContext context = BuildContext.newContext(this.collection);
         MongoDBQueryUtil.buildEntries(context, this.entries);
 
-        MongoDBQueryUtil.printQuery(context);
-
         DefaultQueryResult result = new DefaultQueryResult();
         MongoCursor<Document> cursor = collection.getCollection().aggregate(context.getFindQuery()).cursor();
         while(cursor.hasNext()) {

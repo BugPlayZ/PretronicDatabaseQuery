@@ -52,8 +52,6 @@ public class MongoDBReplaceQuery extends AbstractReplaceQuery<MongoDBDatabaseCol
             }
         }
 
-        MongoDBQueryUtil.printQuery(context);
-
         DefaultQueryResult result = new DefaultQueryResult();
         MongoCursor<Document> cursor = collection.getCollection().aggregate(context.getFindQuery()).cursor();
         while(cursor.hasNext()) {

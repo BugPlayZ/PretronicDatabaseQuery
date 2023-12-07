@@ -48,8 +48,6 @@ public class MongoDBFindQuery extends AbstractFindQuery<MongoDBDatabaseCollectio
         BuildContext context = BuildContext.newContext(this.collection);
         MongoDBQueryUtil.buildEntries(context, this.entries);
 
-        MongoDBQueryUtil.printQuery(context);
-
         DefaultQueryResult result = new DefaultQueryResult();
         MongoCursor<Document> cursor = collection.getCollection().aggregate(context.getFindQuery()).cursor();
         while(cursor.hasNext()) {
@@ -60,9 +58,7 @@ public class MongoDBFindQuery extends AbstractFindQuery<MongoDBDatabaseCollectio
 
             });
             if(getEntries.isEmpty()) {
-                System.out.println("get entries empty");
                 document.forEach((key, value)-> {
-                    System.out.println(value.getClass());
                     if(value instanceof ArrayList<?>) {
                         List<Document> subResult = (List<Document>) value;
                         if(!subResult.isEmpty()) {

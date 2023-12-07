@@ -52,8 +52,6 @@ public class MongoDBUpdateQuery extends AbstractUpdateQuery<MongoDBDatabaseColle
             }
         }
 
-        MongoDBQueryUtil.printQuery(context);
-
         DefaultQueryResult result = new DefaultQueryResult();
         MongoCursor<Document> cursor = collection.getCollection().aggregate(context.getFindQuery()).cursor();
         while(cursor.hasNext()) {
