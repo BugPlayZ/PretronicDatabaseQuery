@@ -53,6 +53,7 @@ public abstract class AbstractDialect implements Dialect {
     private final DatabaseDriverEnvironment environment;
 
     private final boolean dynamicDependencies;
+    private final boolean useGraveAccent;
 
     public AbstractDialect(String name, String driverName, String protocol, DatabaseDriverEnvironment environment, boolean dynamicDependencies) {
         this.name = name;
@@ -60,6 +61,16 @@ public abstract class AbstractDialect implements Dialect {
         this.protocol = protocol;
         this.environment = environment;
         this.dynamicDependencies = dynamicDependencies;
+        this.useGraveAccent = true;
+    }
+
+    public AbstractDialect(String name, String driverName, String protocol, DatabaseDriverEnvironment environment, boolean dynamicDependencies, boolean useGraveAccent) {
+        this.name = name;
+        this.driverName = driverName;
+        this.protocol = protocol;
+        this.environment = environment;
+        this.dynamicDependencies = dynamicDependencies;
+        this.useGraveAccent = useGraveAccent;
     }
 
     @Override
@@ -133,7 +144,7 @@ public abstract class AbstractDialect implements Dialect {
                 throw new IllegalArgumentException(String.format("Entry %s is not supported for MySQL query", entry.getClass().getName()));
             }
         }
-        return new Pair<>(queryBuilder.append(");").toString(), preparedValues);
+        return new Pair<>(formatString(queryBuilder.append(");").toString()), preparedValues);
     }
 
     private void buildCreateQueryCreateEntry(SQLDatabase database, StringBuilder queryBuilder, List<Object> preparedValues, AbstractCreateQuery.CreateEntry entry) {
@@ -237,7 +248,7 @@ public abstract class AbstractDialect implements Dialect {
             }
             queryBuilder.append(")");
         }
-        return new Pair<>(queryBuilder.append(";").toString(), preparedValues);
+        return new Pair<>(formatString(queryBuilder.append(";").toString()), preparedValues);
     }
 
     private void buildInsertQueryFieldsPart(List<AbstractInsertQuery.Entry> entries, StringBuilder queryBuilder, AtomicInteger preparedValuesCount, AtomicInteger valueCount, List<Object> preparedValues, Object[] values) {
@@ -272,7 +283,7 @@ public abstract class AbstractDialect implements Dialect {
             queryBuilder.append(collection.getDatabase().getName()).append("`.`");
         }
         queryBuilder.append(collection.getName()).append("` ").append(state.setBuilder).append(state.buildSearchQuery());
-        return new Pair<>(queryBuilder.toString(), state.preparedValues);
+        return new Pair<>(formatString(queryBuilder.toString()), state.preparedValues);
     }
 
     private void buildUpdateQueryEntry(AbstractChangeAndSearchQuery.ChangeAndSearchEntry entry, UpdateQueryBuilderState state) {
@@ -312,12 +323,12 @@ public abstract class AbstractDialect implements Dialect {
         }
         queryBuilder.append(collection.getName()).append("` ").append(state.buildSearchQuery());
 
-        return new Pair<>(queryBuilder.toString(), state.preparedValues);
+        return new Pair<>(formatString(queryBuilder.toString()), state.preparedValues);
     }
 
     private String buildFindQueryGetBuilder(FindQueryBuilderState state) {
         if(state.getBuilder.length() == 0) return "*";
-        else return state.getBuilder.toString();
+        else return formatString(state.getBuilder.toString());
     }
 
     private void buildFindQueryEntry(AbstractFindQuery.GetEntry entry, FindQueryBuilderState state) {
@@ -345,7 +356,7 @@ public abstract class AbstractDialect implements Dialect {
             queryBuilder.append(collection.getDatabase().getName()).append("`.`");
         }
         queryBuilder.append(collection.getName()).append("` ").append(state.buildSearchQuery());
-        return new Pair<>(queryBuilder.toString(), state.preparedValues);
+        return new Pair<>(formatString(queryBuilder.toString()), state.preparedValues);
     }
 
 
@@ -608,7 +619,11 @@ public abstract class AbstractDialect implements Dialect {
             builder.append(databaseCollection).append("`.`");
         }
         builder.append(field);
-        return builder.toString();
+        return formatString(builder.toString());
+    }
+
+    private String formatString(String string) {
+        return string.replace("`", (useGraveAccent ? "`" : ""));
     }
 
     private Object getEntry(Object value, AtomicInteger preparedValuesCount, Object[] values) {
