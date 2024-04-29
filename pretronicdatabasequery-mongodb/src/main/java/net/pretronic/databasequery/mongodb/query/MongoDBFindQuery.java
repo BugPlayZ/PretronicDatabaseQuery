@@ -54,9 +54,7 @@ public class MongoDBFindQuery extends AbstractFindQuery<MongoDBDatabaseCollectio
 
             Document document = cursor.next();
             DefaultQueryResultEntry resultEntry = new DefaultQueryResultEntry(collection.getDatabase().getDriver());
-            document.forEach((key, value)-> {
 
-            });
             if(getEntries.isEmpty()) {
                 document.forEach((key, value)-> {
                     if(value instanceof ArrayList<?>) {
